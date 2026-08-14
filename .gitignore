@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.claude/
+
+# Downloaded MediaPipe model bundles - re-fetched by the scripts, not source
+*.task
+
+# Personal/local assets - not meant for a shared repo
+background.jpg
+withdrawal_form.pdf
