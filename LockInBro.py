@@ -221,7 +221,7 @@ def build_mock_popup(root):
         ("Last observed activity:", "Not looking at screen"),
         ("Status:", "Pending your return"),
     ]
-    for label, value in fields:
+    for label, value in fields: 
         row = tk.Frame(frame, bg="#f4f1e8")
         row.pack(fill="x", pady=4)
         tk.Label(row, text=label, font=("Georgia", 14, "bold"), width=22, anchor="e",
@@ -259,13 +259,13 @@ def build_pdf_popup(root, page_images):
     page_idx = {"i": 0}
 
     image_label = tk.Label(popup, bg="#1a1a1a")
-    image_label.place(relx=0.5, rely=0.45, anchor="center")
+    image_label.place(relx=0.5, rely=0.47, anchor="center")
 
     caption_text = "Look back at the screen to automatically cancel this withdrawal."
     if len(page_images) > 1:
         caption_text += "  (← / → to view other pages)"
     tk.Label(popup, text=caption_text, font=("Georgia", 13, "italic"),
-              bg="#1a1a1a", fg="#ccc").place(relx=0.5, rely=0.94, anchor="center")
+              bg="#1a1a1a", fg="#ccc").place(relx=0.5, rely=0.985, anchor="s")
 
     page_indicator = tk.Label(popup, font=("Georgia", 11), bg="#1a1a1a", fg="#888")
     page_indicator.place(relx=0.99, rely=0.01, anchor="ne")
@@ -287,9 +287,9 @@ def build_pdf_popup(root, page_images):
 def main():
     parser = argparse.ArgumentParser(description="Nag you back to focus with a mock withdrawal form.")
     parser.add_argument("--camera", type=int, default=0, help="camera index (default 0)")
-    parser.add_argument("--lost-seconds", type=float, default=0.2,
+    parser.add_argument("--lost-seconds", type=float, default=0.0,
                          help="seconds of sustained inattention before the popup appears")
-    parser.add_argument("--recovery-seconds", type=float, default=2.0,
+    parser.add_argument("--recovery-seconds", type=float, default=0.0,
                          help="seconds of sustained attention before the popup auto-closes")
     parser.add_argument("--yaw-threshold", type=float, default=25.0, help="max degrees left/right turn")
     parser.add_argument("--pitch-threshold", type=float, default=20.0, help="max degrees up/down tilt")
@@ -320,7 +320,7 @@ def main():
             screen_w = root.winfo_screenwidth()
             screen_h = root.winfo_screenheight()
             try:
-                page_images = render_pdf_pages(args.form_pdf, screen_w * 0.8, screen_h * 0.75)
+                page_images = render_pdf_pages(args.form_pdf, screen_w * 0.97, screen_h * 0.90)
             except Exception as e:
                 print(f"Could not render {args.form_pdf}: {e}. Falling back to mock form.")
         else:
@@ -345,7 +345,7 @@ def main():
         elif not should_show and popup_holder["window"] is not None:
             popup_holder["window"].destroy()
             popup_holder["window"] = None
-        root.after(200, poll)
+        root.after(15, poll)
 
     root.after(200, poll)
     try:
